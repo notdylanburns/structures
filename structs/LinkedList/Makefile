@@ -3,8 +3,8 @@ LD := ld
 
 ROOT_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-LIBTARGET := {INSERT_DS_NAME_HERE}.so
-OBJTARGET := {INSERT_DS_NAME_HERE}.o
+LIBTARGET := LinkedList.so
+OBJTARGET := LinkedList.o
 
 SRCS := $(wildcard *.c)
 LIBOBJS := $(patsubst %.c, %.o-libsrc, $(SRCS))

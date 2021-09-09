@@ -39,7 +39,7 @@ structures
 
 # Adding your own data structures
 
-Run the command `scripts/new_ds.sh [STRUCTURE_NAME]`, which will create a Makefile, `\[STRUCTURE_NAME].c and \[STRUCTURE_NAME].h. In order to be compatible with the Makefile in the root of the directory, user created Makefiles should have these three rules:
+Run the command `scripts/new_ds.sh [STRUCTURE_NAME]`, which will create a Makefile, \[STRUCTURE_NAME].c and \[STRUCTURE_NAME].h. In order to be compatible with the Makefile in the root of the directory, user created Makefiles should have these three rules:
     
     1. obj: builds a singular object ready to be compiled into a shared object library (ie must be compiled with -fpic)
 

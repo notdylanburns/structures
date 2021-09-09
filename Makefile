@@ -10,7 +10,7 @@ DIRS := $(INC_DIR) $(LIB_DIR) $(OBJ_DIR)
 SRC_DIRS := $(shell find $(STRUCT_DIR) -mindepth 1 -maxdepth 1 -type d)
 NAMES := $(foreach dir, $(SRC_DIRS), $(notdir $(dir)))
 OBJS := $(foreach n, $(NAMES), $(OBJ_DIR)/$(n).o)
-LIBS := $(foreach n, $(NAMES), $(LIB_DIR)/$(n).so)
+LIBS := $(foreach n, $(NAMES), $(LIB_DIR)/lib$(n).so)
 HEDS := $(foreach n, $(NAMES), $(INC_DIR)/$(n).h)
 
 OBJ_TARGET := obj
@@ -23,13 +23,13 @@ LDFLAGS :=
 
 all: $(DIRS) $(LIBS) $(HEDS) $(TARGET)
 $(TARGET): $(OBJS)
-	$(CC) $(LDFLAGS) -o $@ $<
+	$(CC) $(LDFLAGS) -shared -o $@ $<
 
 $(OBJ_DIR)/%.o: %
 	$(MAKE) $(OBJ_TARGET) -C $(STRUCT_DIR)/$<
 	cp $(STRUCT_DIR)/$</$<.o $@
 
-$(LIB_DIR)/%.so: %
+$(LIB_DIR)/lib%.so: %
 	$(MAKE) $(LIB_TARGET) -C $(STRUCT_DIR)/$<
 	cp $(STRUCT_DIR)/$</$<.so $@
 
@@ -46,7 +46,7 @@ clean:
 	rm -rf $(OBJ_DIR)
 	$(foreach n, $(NAMES), $(MAKE) $(CLEAN_TARGET) -C $(STRUCT_DIR)/$(n))
 
-cleanall:
+cleanall: clean
 	rm -rf $(DIRS)
 
 .PHONY: all
