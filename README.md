@@ -40,10 +40,8 @@ structures
 # Adding your own data structures
 
 Run the command `scripts/new_ds.sh [STRUCTURE_NAME]`, which will create a Makefile, \[STRUCTURE_NAME].c and \[STRUCTURE_NAME].h. In order to be compatible with the Makefile in the root of the directory, user created Makefiles should have these three rules:
-    * obj: builds a singular object ready to be compiled into a shared object library (ie must be compiled with -fpic)
-
-    * lib: builds a shared object library (linked with -shared) with all the functionality of your data structure.
-
-    * clean: cleans the directory (remove unnecessary objects/libraries)
+  * obj: builds a singular object ready to be compiled into a shared object library (ie must be compiled with -fpic)
+  * lib: builds a shared object library (linked with -shared) with all the functionality of your data structure.
+  * clean: cleans the directory (remove unnecessary objects/libraries)
 
 Next time you run `make` in the top level of the repository, your library will be built as dictated by your Makefile. As a result, `make install` will install your own libraries too.
