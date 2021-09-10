@@ -6,6 +6,10 @@ LIB_DIR := $(ROOT_DIR)/lib
 OBJ_DIR := $(ROOT_DIR)/obj
 STRUCT_DIR := $(ROOT_DIR)/structs
 
+SYS_INC_DIR := /usr/include/structures
+SYS_LIB_DIR := /usr/lib
+SYS_BIN_DIR := /usr/bin
+
 DIRS := $(INC_DIR) $(LIB_DIR) $(OBJ_DIR)
 SRC_DIRS := $(shell find $(STRUCT_DIR) -mindepth 1 -maxdepth 1 -type d)
 NAMES := $(foreach dir, $(SRC_DIRS), $(notdir $(dir)))
@@ -21,9 +25,9 @@ TARGET := $(LIB_DIR)/libstructures.so
 
 LDFLAGS := 
 
-all: $(DIRS) $(LIBS) $(HEDS) $(TARGET)
+all: $(DIRS) $(LIBS) $(HEDS) $(TARGET) clean
 $(TARGET): $(OBJS)
-	$(CC) $(LDFLAGS) -shared -o $@ $<
+	$(CC) $(LDFLAGS) -shared -o $@ $^
 
 $(OBJ_DIR)/%.o: %
 	$(MAKE) $(OBJ_TARGET) -C $(STRUCT_DIR)/$<
@@ -44,9 +48,16 @@ $(DIRS):
 
 clean:
 	rm -rf $(OBJ_DIR)
-	$(foreach n, $(NAMES), $(MAKE) $(CLEAN_TARGET) -C $(STRUCT_DIR)/$(n))
+	for n in $(NAMES); do $(MAKE) $(CLEAN_TARGET) -C $(STRUCT_DIR)/$$n; done
 
 cleanall: clean
 	rm -rf $(DIRS)
+
+install: $(SYS_INC_DIR) $(SYS_LIB_DIR)
+	cp $(INC_DIR)/* $(SYS_INC_DIR)
+	cp $(LIB_DIR)/* $(SYS_LIB_DIR)
+
+$(SYS_INC_DIR) $(SYS_LIB_DIR):
+	mkdir $@
 
 .PHONY: all

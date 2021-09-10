@@ -1,0 +1,6 @@
+#ifndef _DOUBLYLINKEDLIST_H_GUARD_
+#define _DOUBLYLINKEDLIST_H_GUARD_
+
+
+
+#endif
